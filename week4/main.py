@@ -34,22 +34,26 @@ async def signin(request: Request, username : str=Form(None), password: str= For
                 request.session["signed_in"]=True
                 return RedirectResponse(url="/member", status_code=303)
       
-@app.get("/error")
+@app.get("/error",response_class=HTMLResponse)
 async def error(request: Request,message: str):
     return templates.TemplateResponse("error.html", {"request":request, "message": message})
 @app.get("/member", response_class=RedirectResponse)
 async def success(request: Request):
         if request.session.get("signed_in")==True:
-                 return templates.TemplateResponse(request=request, name="member.html")
-        if request.session.get("signed_in")!=True: 
-                return RedirectResponse(url="/", status_code=303)            
+                return templates.TemplateResponse(request=request, name="member.html")
+        else: 
+                return RedirectResponse(url="/", status_code=303) #未登入者連進來才不會異常          
 
 @app.get("/signout",response_class=RedirectResponse)
 async def signout(request: Request):    
         if request.session.get("signed_in")==True : #點擊登出系統，要將status改為登出
                 request.session["signed_in"]=False
                 return RedirectResponse(url="/", status_code=303)
-        
-        
-         
-        
+        else:
+               return RedirectResponse(url="/member", status_code=303) #未登入者連進來才不會異常
+
+# task4  
+@app.get("/square/{integer}",response_class=HTMLResponse)
+async def calculate_square(request: Request, integer : int): 
+       square_result=integer**2
+       return templates.TemplateResponse("square.html",{ "request":request, "integer": integer,"square_result":square_result})
