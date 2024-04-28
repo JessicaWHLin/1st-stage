@@ -46,11 +46,8 @@ async def success(request: Request):
 
 @app.get("/signout",response_class=RedirectResponse)
 async def signout(request: Request):    
-        if request.session.get("signed_in")==True : #點擊登出系統，要將status改為登出
-                request.session["signed_in"]=False
-                return RedirectResponse(url="/", status_code=303)
-        else:
-               return RedirectResponse(url="/member", status_code=303) #未登入者連進來才不會異常
+        request.session["signed_in"]=False
+        return RedirectResponse(url="/member", status_code=303)
 
 # task4  
 @app.get("/square/{integer}",response_class=HTMLResponse)
