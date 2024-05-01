@@ -124,7 +124,7 @@
     -> join website.member on message.member_id = member.id
     -> where member.username = 'test';
     ```
-  ![sth wrong](/image/task5_3.png)
+  ![sth wrong](image/task5_3.png)
 ####  5.4 Use SELECT, SQL Aggregation Functions with JOIN statement, get the average like count of messages where sender username equals to test.
 - ```
    select avg(message.like_count) as avg_like_count
