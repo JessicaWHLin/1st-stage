@@ -1,0 +1,60 @@
+<IDOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>week2 JS3</title>
+        </head>
+        <body>
+            <script>
+                function func(...data){
+                // your code here
+                    mid=[];
+                    count=0;
+                    for(let n=0;n<data.length;n++){
+                        if (data[n].length==2){
+                            mid.push(data[n][1]);
+                        }
+                        else if(data[n].length==3){
+                            mid.push(data[n][1]);
+                        }
+                        else if(data[n].length==4){
+                            mid.push(data[n][2]);
+                        }
+                        else if(data[n].length==5){
+                            mid.push(data[n][2]);
+                        }
+                    }
+                    // console.log("mid=",mid);
+                    // console.log("mid.length",mid.length);
+                    //算出中間名的次數:item=當前值;obj=上一個傳回值
+                    const total_count=mid.reduce((obj,item)=>{
+                        if(item in obj){
+                            obj[item]++;
+                        }else{
+                            obj[item]=1;
+                        }
+                            return obj;
+                        },{})//後面的{}是初始值
+                    // console.log(Object.values(total_count));
+                    for (let i=0;i<mid.length;i++){
+                        if(total_count[mid[i]]==1){
+                            console.log(data[i]);
+                        }
+                        else
+                        count++;                      
+                    }
+                    if(count==mid.length){
+                        console.log("沒有");
+                    }
+
+                }
+                    
+                console.log("-----------Task 3----------");
+                func("彭大牆", "陳王明雅", "吳明"); // print 彭大牆
+                func("郭靜雅", "王立強", "郭林靜宜", "郭立恆", "林花花"); // print 林花花
+                func("郭宣雅", "林靜宜", "郭宣恆", "林靜花"); // print 沒有
+                func("郭宣雅", "夏曼藍波安", "郭宣恆"); // print 夏曼藍波安
+            </script>
+        </body>
+    </html>

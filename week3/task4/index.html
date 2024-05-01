@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="css.css" />
+        <title>week3.task4</title>
+    </head>
+    <body>
+        <div class="head">
+            <div class="headline">My Website</div>
+            <div class="req3-menu">
+                <img class="pop" onclick="popup(this)";
+                src="burger_menu_icon.png" />
+            </div>
+           
+            <div class="req1_2-menu">
+                <span class="menu">Item 1</span>
+                <span class="menu">Item 2</span>
+                <span class="menu">Item 3</span> 
+                <span class="menu">Item 4</span>
+            </div>
+        </div>  
+            <div id="menu_req3">
+                <div id="close" onclick="popup2(this)">X </div>
+                <div class="menu_req3_detail">Item 1</div>
+                <div class="menu_req3_detail">Item 2</div>
+                <div class="menu_req3_detail">Item 3</div>
+                <div class="menu_req3_detail">Item 4</div>
+            </div>
+        <div class="welcome">Welcome to MyHome</div>
+        <div class="list1">
+            <div class="promotion"></div>
+            <div class="promotion"></div>
+            <div class="promotion req2"></div>
+        </div>
+        <div class="list2"></div>
+        <div class="beforeBtn"><button class="button" >Load More</button></div>
+        <script>
+            function popup(){
+                let li=document.querySelector("#menu_req3");
+                let close=document.querySelector("#close");
+                li.style.display="block";
+                close.style.display="block";
+            }
+            function popup2(){
+                let li=document.querySelector("#menu_req3");
+                let close=document.querySelector("#close");
+                li.style.display="none";
+                close.style.display="none";
+            }
+
+            let smallImgList=[];
+            let count=1;//計算點擊button的次數
+            function getData(smallImgList,count){
+              //利用fetch進行連線取得資料
+                fetch("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-1").then(function(response){
+                return response.json();
+                }).then(function(data){
+                    
+                    let spotList=[];
+                    let spotList_nameImage1=[];
+                    let spotList_nameImage2=[];
+                    //處理給big的資料存在list裡
+                    for(let i=0;i<data.data.results.length;i++){
+                        spotList.push(data.data.results[i]);  
+                    }
+                    for(let i=0;i<spotList.length;i++){   
+                        spotList_nameImage1.push([spotList[i]["stitle"],spotList[i]["filelist"]]);
+                    }
+                    for(let j=0;j<spotList_nameImage1.length;j++){
+                        let temp=spotList_nameImage1[j][1].match(/https:\/\/\S+?\.(?:jpg)/i); 
+                        spotList_nameImage2.push(temp);
+                    }
+                //處理給small的資料放入list(前3個景點拿掉,剩55景點)
+                let smallImgList=[];
+                for(let i=3;i<spotList_nameImage1.length;i++){
+                    smallImgList.push([spotList_nameImage1[i][0],spotList_nameImage2[i]]);  
+                }
+                displaybig(spotList_nameImage2,spotList_nameImage1);//3個bigBox的圖片&spot name載入
+                displaysmall(smallImgList);//10個smallBox的圖片&spot name載入
+                
+                })//不要動
+                return smallImgList;
+            }//不要動
+             //bigBox的圖片&spot name載入               
+            function displaybig(spotList_nameImage2,spotList_nameImage1){
+            let promotionDivs = document.querySelectorAll(".promotion");//父節點
+            let bigImgs=document.querySelectorAll("img");
+            if (bigImgs.length<3){
+                for(let i=0;i<promotionDivs.length;i++){
+                    let bigImg=document.createElement("img");
+                    let bigImgName=document.createElement("div");
+                    bigImg.classList.add("img");
+                    bigImgName.classList.add("promo");
+                    promotionDivs[i].appendChild(bigImg);    
+                    promotionDivs[i].appendChild(bigImgName);
+                    bigImg.src=spotList_nameImage2[i];//loading圖片到bigBox
+                    bigImgName.textContent=spotList_nameImage1[i][0];//loading spotName到bigBox
+                }}
+            }
+            
+            //smallBox的圖片&spot name載入
+            function displaysmall(smallImgList){
+                let mainDivs=10;
+                let mainNode = document.querySelector(".list2");//父節點
+                let smallImgSet= document.querySelectorAll(".main");//smallbox的節點
+                // console.log(smallImgList);
+
+                if(smallImgSet.length<10){
+                    console.log("small清單=",smallImgList);
+                    for(let i=0;i<mainDivs;i++){
+                        let smallImg=document.createElement("div");
+                        let smallImgName=document.createElement("div");
+                        let star=document.createElement("img");
+                        smallImg.classList.add("main");
+                        smallImgName.classList.add("transparent");
+                        star.classList.add("star");
+                        mainNode.appendChild(smallImg);
+                        smallImg.appendChild(star);
+                        smallImg.appendChild(smallImgName);
+                        smallImg.style.backgroundImage="url('"+ smallImgList[i][1]+"')";
+                        smallImgName.textContent=smallImgList[i][0];
+                        star.src="star_icon.png";
+                    }
+                    //設定最後兩個圖片在1200px~600px的長相
+                    let smallImgSet2=document.querySelectorAll(".main");
+                    smallImgSet2[smallImgSet2.length-2].classList.add("req2_1");
+                    smallImgSet2[smallImgSet2.length-1].classList.add("req2_2");
+                }else if(smallImgSet.length>=10 && smallImgSet.length<smallImgList.length-5){
+                    let smallImgSet3=document.querySelectorAll(".main");
+                    // console.log(smallImgSet3.length);
+                    smallImgSet3[smallImgSet3.length-2].classList.remove("req2_1");
+                    smallImgSet3[smallImgSet3.length-1].classList.remove("req2_2");
+                    for(let i=0;i<mainDivs;i++){
+                        let smallImg=document.createElement("div");
+                        let smallImgName=document.createElement("div");
+                        let star=document.createElement("img");
+                        smallImg.classList.add("main");
+                        smallImgName.classList.add("transparent");
+                        star.classList.add("star");
+                        mainNode.appendChild(smallImg);
+                        smallImg.appendChild(star);
+                        smallImg.appendChild(smallImgName);
+                        smallImg.style.backgroundImage="url('"+ smallImgList[mainDivs*count+i][1]+"')";
+                        smallImgName.textContent=smallImgList[mainDivs*count+i][0];
+                        star.src="star_icon.png";
+                    }
+                    // 設定最後兩個圖片在1200px~600px的長相
+                    // let smallImgSet4=document.querySelectorAll(".main");
+                    // // console.log(smallImgSet4.length);
+                    // smallImgSet4[smallImgSet4.length-2].classList.add("req2_1");
+                    // smallImgSet4[smallImgSet4.length-1].classList.add("req2_2");
+                    count+=1;
+                }
+                else if(smallImgSet.length==smallImgList.length-5){
+                    // let smallImgSet5=document.querySelectorAll(".main");
+                    // smallImgSet5[smallImgSet5.length-2].classList.remove("req2_1");
+                    // smallImgSet5[smallImgSet5.length-1].classList.remove("req2_2");
+                    for(let i=0;i<smallImgList.length-smallImgSet.length;i++){
+                        let smallImg=document.createElement("div");
+                        let smallImgName=document.createElement("div");
+                        let star=document.createElement("img");
+                        smallImg.classList.add("main");
+                        smallImgName.classList.add("transparent");
+                        star.classList.add("star");
+                        mainNode.appendChild(smallImg);
+                        smallImg.appendChild(star);
+                        smallImg.appendChild(smallImgName);
+                        smallImg.style.backgroundImage="url('"+ smallImgList[mainDivs*count+i][1]+"')";
+                        smallImgName.textContent=smallImgList[mainDivs*count+i][0];
+                        star.src="star_icon.png";
+                    let loadAll=document.querySelector(".button");
+                    loadAll.style.display="none";
+                    }
+                }
+            }
+            let click=document.querySelector(".button");
+            click.onclick=function(){
+                getData(smallImgList);
+            };
+            getData();
+
+
+            
+        </script>
+    </body>
+</html>

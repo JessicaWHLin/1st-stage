@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+    <html>
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>week2 JS2</title>
+            </head>
+            <body>
+                <script>
+                 // your code here, maybe
+                    schedule=[];
+                    rankPrice=[];
+                    rankRate=[];
+                    newBooking=[];
+                    cfmBooking=[];
+                    function shchedule(con,sch){
+                        for(let i=0;i<con.length;i++){
+                            sch.push([con[i]["name"]]);
+                        }
+                        // console.log(sch);
+                        return sch;                        
+                    
+                    }
+                    function rank(cri,rank){ //決定排名
+                        elem=[];
+                        for(let i=0;i<consultants.length;i++){
+                            elem.push(consultants[i][cri]);
+                        }
+                        elem.sort(function(a,b){
+                            if(cri=="price"){
+                                return a-b;
+                            }
+                            else if(cri=="rate"){
+                                return b-a;
+                            }
+                        });
+                        rank=[];
+                        for (let i=0;i<consultants.length;i++){
+                            for(let j=0;j<consultants.length;j++){
+                                if(elem[i]==consultants[j][cri]){
+                                    rank.push(consultants[j]["name"]);
+                                } 
+                            }
+                            }
+                        return rank;
+                    } 
+                    function book_Time(hour,duration){
+                        bookTime=[];
+                        for(let i=0;i<(duration+1);i++){
+                            bookTime.push(hour+i);   
+                        }
+                        return bookTime;
+                    }   
+                    function book(consultants, hour, duration, criteria){
+                        // your code here
+
+                        // 呼叫criteria決定的顧問排名
+                        rankPrice=rank("price",rankPrice);
+                        rankRate=rank("rate",rankRate);
+                        if(schedule.length==0){
+                            shchedule(consultants,schedule);
+                        }
+                        function checkTime(cri,rank){
+                            cfmBooking=[];
+                            if(criteria==cri){
+                                for(let i=0;i<rank.length;i++){
+                                    newBooking=[];
+                                    newBooking.push(rank[i]); 
+                                    newBooking.push(book_Time(hour,duration));
+                                    newBooking.flat(Infinity);                              
+                                    for (let k=0;k<schedule.length;k++){
+                                        if(cfmBooking.length==0 && schedule[k][0].includes(newBooking[0])){
+
+                                            let set1=new Set(newBooking.flat(Infinity));
+                                            let set2=new Set(schedule[k].flat(Infinity));
+                                            let result=newBooking.flat(Infinity).filter((e)=>{
+                                                return set2.has(e);
+                                            })
+                                            if(result.length==1){
+                                                cfmBooking.push(newBooking);
+                                                schedule[k].push(cfmBooking[0][1]);
+                                                schedule[k].flat(Infinity);
+                                            }
+                                            else{
+                                                break;
+                                            }    
+                                        }
+                                    }
+                                }
+
+                            return cfmBooking,schedule;
+                            }
+                        }
+                        function chooseRank(cri){
+                            if(cri=="price"){
+                                return rankPrice;
+                            }
+                            if(cri=="rate"){
+                                return rankRate;
+                            }
+                        }
+                    checkTime(criteria,chooseRank(criteria));
+                    if(cfmBooking.length==0){
+                        cfmBooking=[["No Service"]];
+                    }
+                    console.log(cfmBooking[0][0]);
+
+                    }
+                    const consultants=[
+                    {"name":"John", "rate":4.5, "price":1000},
+                    {"name":"Bob", "rate":3, "price":1200},
+                    {"name":"Jenny", "rate":3.8, "price":800}
+                    ];
+                    console.log("-----------Task 2----------");
+                    book(consultants, 15, 1, "price"); // Jenny
+                    book(consultants, 11, 2, "price"); // Jenny
+                    book(consultants, 10, 2, "price"); // John
+                    book(consultants, 20, 2, "rate"); // John
+                    book(consultants, 11, 1, "rate"); // Bob
+                    book(consultants, 11, 2, "rate"); // No Service
+                    book(consultants, 14, 3, "price"); // John   
+
+
+
+
+                </script>
+            </body>
+        </html>

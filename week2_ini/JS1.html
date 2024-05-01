@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>week2 JS1</title>
+        </head>
+        <body>
+            <script>
+                function findAndPrint(messages, currentStation){
+                // your code here
+                friend=[];
+                myLocation=[];
+                dis=[];
+                allMRT=[];
+                friendLoc=[];
+                //捷運各站的順序
+                stationMRT={
+                "Songshan":1,
+                "Nanjing Sanmin":2,
+                "Taipei Arena":3,
+                "Nanjing Fuxing":4,
+                "SongJiang Nanjing":5,
+                "Zhongshan":6,
+                "Beimen":7,
+                "Ximen":8,
+                "Xiaonanmen":9,
+                "Chiang Kai-Shek Memorial Hall":10,
+                "Guting":11,
+                "Taipower Building":12,
+                "Gongguan":13,
+                "Wanlong":14,
+                "Jingmei":15,
+                "Dapingin":16,
+                "Qizhang":17,
+                "Xindian City Hall":18,
+                "Xindian":19,
+                "Xiaobitan":17.5
+                }         
+                allMRT=Object.entries(stationMRT);
+                // console.log(allMRT);
+                friend.push(Object.keys(messages));
+                // console.log(friend);
+                friendMess=[];
+                newMess=[]
+                friendMess.push(Object.values(messages));
+                // console.log(Object.keys(stationMRT));
+                for (let i=0;i<friendMess.length;i++){
+                    for(let j=0;j<friendMess[i].length;j++){
+                        newMess.push(friendMess[i][j]);
+                    }
+                }
+                // console.log(newMess);
+                // console.log(allMRT);
+                // console.log(friend[0][0]);
+                temp=[];
+                //計算朋友的站
+                for (let i=0;i<newMess.length;i++){
+                
+                        for( let k=0;k<allMRT.length;k++){
+                            if(newMess[i].includes(allMRT[k][0])){
+                                // console.log("y");
+                                temp=[friend[0][i],allMRT[k][0],allMRT[k][1]];
+                            }
+                        } 
+                    friendLoc.push(temp);
+                }
+                // console.log(friendLoc);
+                //計算自己的站    
+                for( let k=0;k<allMRT.length;k++){
+                            if(currentStation.includes(allMRT[k][0])){
+                                temp=[allMRT[k][0],allMRT[k][1]];
+                            }
+                    }
+                myLocation.push(temp);
+                // console.log(myLocation);
+                //判斷距離
+                for(let i=0;i<friendLoc.length;i++){
+                    temp=[friendLoc[i][0],Math.abs(friendLoc[i][2]-myLocation[0][1])];
+                    // console.log(myLocation[0][1]);
+                    dis.push(temp);
+                }
+                // console.log(dis);
+                // console.log(temp);
+                var min=18;
+                for (let i=0;i<dis.length;i++){
+                    if(dis[i][1]<min){
+                        min=dis[i][1];
+                        // console.log(min);
+                    }       
+                }
+                for (let i=0;i<dis.length;i++){
+                    if(dis[i][1]==min){
+                       console.log(dis[i][0]);
+                    }       
+                }
+            }//函式的結尾括號  
+                const messages={
+                "Bob":"I'm at Ximen MRT station.",
+                "Mary":"I have a drink near Jingmei MRT station.",
+                "Copper":"I just saw a concert at Taipei Arena.",
+                "Leslie":"I'm at home near Xiaobitan station.",
+                "Vivian":"I'm at Xindian station waiting for you."
+                };
+                console.log("-----------Task 1----------");
+                findAndPrint(messages, "Wanlong"); // print Mary
+                findAndPrint(messages, "Songshan"); // print Copper
+                findAndPrint(messages, "Qizhang"); // print Leslie
+                findAndPrint(messages, "Ximen"); // print Bob
+                findAndPrint(messages, "Xindian City Hall"); // print Vivian
+            </script>
+        </body>
+        </html>
