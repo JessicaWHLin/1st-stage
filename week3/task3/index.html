@@ -1,0 +1,233 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="css.css" />
+        <title>week3.task3</title>
+    </head>
+    <body>
+        <div class="head">
+            <div class="headline">My Website</div>
+            <div class="req3-menu">
+                <img class="pop" onclick="popup(this)";
+                src="burger_menu_icon.png" />
+            </div>
+           
+            <div class="req1_2-menu">
+                <span class="menu">Item 1</span>
+                <span class="menu">Item 2</span>
+                <span class="menu">Item 3</span> 
+                <span class="menu">Item 4</span>
+            </div>
+        </div>  
+            <div id="menu_req3">
+                <div id="close" onclick="popup2(this)">X </div>
+                <div class="menu_req3_detail">Item 1</div>
+                <div class="menu_req3_detail">Item 2</div>
+                <div class="menu_req3_detail">Item 3</div>
+                <div class="menu_req3_detail">Item 4</div>
+            </div>
+        <div class="welcome">Welcome to MyHome</div>
+        <div class="list1">
+            <div class="promotion"></div>
+            <div class="promotion"></div>
+            <div class="promotion req2"></div>
+        </div>
+        <div class="list2"></div>
+        
+        <script>
+            function popup(){
+                let li=document.querySelector("#menu_req3");
+                let close=document.querySelector("#close");
+                li.style.display="block";
+                close.style.display="block";
+            }
+            function popup2(){
+                let li=document.querySelector("#menu_req3");
+                let close=document.querySelector("#close");
+                li.style.display="none";
+                close.style.display="none";
+            }
+            let spotList=[];
+            let spotList_nameImage1=[];
+            let spotList_nameImage2=[];
+            function getData(){
+              //利用fetch進行連線取得資料
+              fetch("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-1").then(function(response){
+                return response.json();
+                }).then(function(data){
+                for(let i=0;i<data.data.results.length;i++){
+                    spotList.push(data.data.results[i]);  
+                }
+                for(let i=0;i<spotList.length;i++){   
+                    spotList_nameImage1.push([spotList[i]["stitle"],spotList[i]["filelist"]]);
+                }
+
+                for(let j=0;j<spotList_nameImage1.length;j++){
+                    let temp=spotList_nameImage1[j][1].match(/https:\/\/\S+?\.(?:jpg)/i); 
+                    spotList_nameImage2.push(temp);
+                }
+                // bigBox的圖片&spot name載入
+                let promotionDivs = document.querySelectorAll(".promotion");//父節點
+                for(let i=0;i<promotionDivs.length;i++){
+                    let bigImg=document.createElement("img");
+                    let bigImgName=document.createElement("div");
+                    bigImg.classList.add("img");
+                    bigImgName.classList.add("promo");
+                    promotionDivs[i].appendChild(bigImg);    
+                    promotionDivs[i].appendChild(bigImgName);
+                    bigImg.src=spotList_nameImage2[i];//loading圖片到bigBox
+                    bigImgName.textContent=spotList_nameImage1[i][0];//loading spotName到bigBox   
+                }
+                let smallImgList=[];
+                for(let i=3;i<spotList_nameImage1.length;i++){
+                    smallImgList.push([spotList_nameImage1[i][0],spotList_nameImage2[i]]);  
+                }
+
+                // smallBox的圖片&spot name載入
+                let mainDivs=10;
+                let mainNode = document.querySelector(".list2");//父節點
+                for(let i=0;i<mainDivs;i++){
+                    let smallImg=document.createElement("div");
+                    let smallImgName=document.createElement("div");
+                    let star=document.createElement("img");
+                    smallImg.classList.add("main");
+                    smallImgName.classList.add("transparent");
+                    star.classList.add("star");
+                    mainNode.appendChild(smallImg);
+                    smallImg.appendChild(star);
+                    smallImg.appendChild(smallImgName);
+                    smallImg.style.backgroundImage="url('"+ smallImgList[i][1]+"')";
+                    smallImgName.textContent=smallImgList[i][0];
+                    star.src="star_icon.png";
+                }
+                //設定最後兩個圖片在1200px~600px的長相
+                let smallImgSet=document.querySelectorAll(".main");
+                smallImgSet[8].classList.add("req2_1");
+                smallImgSet[9].classList.add("req2_2");
+                })              
+            }
+            getData();
+
+        </script>
+    </body>
+</html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" type="text/css" href="css.css" />
+        <title>week3.task3</title>
+    </head>
+    <body>
+        <div class="head">
+            <div class="headline">My Website</div>
+            <div class="req3-menu">
+                <img class="pop" onclick="popup(this)";
+                src="burger_menu_icon.png" />
+            </div>
+           
+            <div class="req1_2-menu">
+                <span class="menu">Item 1</span>
+                <span class="menu">Item 2</span>
+                <span class="menu">Item 3</span> 
+                <span class="menu">Item 4</span>
+            </div>
+        </div>  
+            <div id="menu_req3">
+                <div id="close" onclick="popup2(this)">X </div>
+                <div class="menu_req3_detail">Item 1</div>
+                <div class="menu_req3_detail">Item 2</div>
+                <div class="menu_req3_detail">Item 3</div>
+                <div class="menu_req3_detail">Item 4</div>
+            </div>
+        <div class="welcome">Welcome to MyHome</div>
+        <div class="list1">
+            <div class="promotion"></div>
+            <div class="promotion"></div>
+            <div class="promotion req2"></div>
+        </div>
+        <div class="list2"></div>
+        
+        <script>
+            function popup(){
+                let li=document.querySelector("#menu_req3");
+                let close=document.querySelector("#close");
+                li.style.display="block";
+                close.style.display="block";
+            }
+            function popup2(){
+                let li=document.querySelector("#menu_req3");
+                let close=document.querySelector("#close");
+                li.style.display="none";
+                close.style.display="none";
+            }
+            let spotList=[];
+            let spotList_nameImage1=[];
+            let spotList_nameImage2=[];
+            function getData(){
+              //利用fetch進行連線取得資料
+              fetch("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-1").then(function(response){
+                return response.json();
+                }).then(function(data){
+                for(let i=0;i<data.data.results.length;i++){
+                    spotList.push(data.data.results[i]);  
+                }
+                for(let i=0;i<spotList.length;i++){   
+                    spotList_nameImage1.push([spotList[i]["stitle"],spotList[i]["filelist"]]);
+                }
+
+                for(let j=0;j<spotList_nameImage1.length;j++){
+                    let temp=spotList_nameImage1[j][1].match(/https:\/\/\S+?\.(?:jpg)/i); 
+                    spotList_nameImage2.push(temp);
+                }
+                // bigBox的圖片&spot name載入
+                let promotionDivs = document.querySelectorAll(".promotion");//父節點
+                for(let i=0;i<promotionDivs.length;i++){
+                    let bigImg=document.createElement("img");
+                    let bigImgName=document.createElement("div");
+                    bigImg.classList.add("img");
+                    bigImgName.classList.add("promo");
+                    promotionDivs[i].appendChild(bigImg);    
+                    promotionDivs[i].appendChild(bigImgName);
+                    bigImg.src=spotList_nameImage2[i];//loading圖片到bigBox
+                    bigImgName.textContent=spotList_nameImage1[i][0];//loading spotName到bigBox   
+                }
+                let smallImgList=[];
+                for(let i=3;i<spotList_nameImage1.length;i++){
+                    smallImgList.push([spotList_nameImage1[i][0],spotList_nameImage2[i]]);  
+                }
+
+                // smallBox的圖片&spot name載入
+                let mainDivs=10;
+                let mainNode = document.querySelector(".list2");//父節點
+                for(let i=0;i<mainDivs;i++){
+                    let smallImg=document.createElement("div");
+                    let smallImgName=document.createElement("div");
+                    let star=document.createElement("img");
+                    smallImg.classList.add("main");
+                    smallImgName.classList.add("transparent");
+                    star.classList.add("star");
+                    mainNode.appendChild(smallImg);
+                    smallImg.appendChild(star);
+                    smallImg.appendChild(smallImgName);
+                    smallImg.style.backgroundImage="url('"+ smallImgList[i][1]+"')";
+                    smallImgName.textContent=smallImgList[i][0];
+                    star.src="star_icon.png";
+                }
+                //設定最後兩個圖片在1200px~600px的長相
+                let smallImgSet=document.querySelectorAll(".main");
+                smallImgSet[8].classList.add("req2_1");
+                smallImgSet[9].classList.add("req2_2");
+                })              
+            }
+            getData();
+
+        </script>
+    </body>
+</html>
+>>>>>>> cd20fd2c52ddac3f93d9be333314110c992b65e5
