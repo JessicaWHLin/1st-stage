@@ -39,7 +39,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'test2','test','test',0,'2024-04-30 16:31:14'),(2,'Lily','lily','lily123',0,'2024-04-30 17:00:46'),(3,'Amy','amy','amy123',0,'2024-04-30 17:00:46'),(4,'John','john','john123',0,'2024-04-30 17:00:46'),(5,'Kelly','kelly','kelly123',0,'2024-04-30 17:00:46');
+INSERT INTO `member` VALUES (1,'test2','test','test',25,'2024-04-30 16:31:14'),(2,'Lily','lily','lily123',20,'2024-04-30 17:00:46'),(3,'Amy','amy','amy123',15,'2024-04-30 17:00:46'),(4,'John','john','john123',10,'2024-04-30 17:00:46'),(5,'Kelly','kelly','kelly123',50,'2024-04-30 17:00:46');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (6,1,'test',0,'2024-05-01 15:19:38'),(7,2,'Lily',0,'2024-05-01 15:21:41'),(8,3,'Amy',0,'2024-05-01 15:21:41'),(9,4,'John',0,'2024-05-01 15:21:41'),(10,5,'Kelly',0,'2024-05-01 15:21:41');
+INSERT INTO `message` VALUES (6,1,'test',5,'2024-05-01 15:19:38'),(7,2,'Lily',10,'2024-05-01 15:21:41'),(8,3,'Amy',15,'2024-05-01 15:21:41'),(9,4,'John',20,'2024-05-01 15:21:41'),(10,5,'Kelly',25,'2024-05-01 15:21:41');
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -81,4 +81,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-01 20:58:00
+-- Dump completed on 2024-05-02 16:32:54

@@ -90,11 +90,15 @@
 #### 4.4 SELECT the average of follower_count of the first 2 rows, in descending order of follower_count, from the member table.
 - ```
    select avg(follower_count)
+    -> from(
+    -> select follower_count
     -> from website.member
     -> order by follower_count desc
-    -> limit 2;
+    -> limit 2
+    -> ) as subquery;
     ```
-  ![sth wrong](image/task4_4.png)
+  ![sth wrong](image/task4_4_1.png)
+  ![sth wrong](image/task4_4_2.png)
 ---
 ## Task 5 : SQL JOIN
 ####  5.1 Create a new table named message, in the website database.
