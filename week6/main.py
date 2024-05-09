@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
@@ -70,14 +70,11 @@ async def member(request: Request):
         sql_query="select member.name,content from message join member on message.member_id=member.id order by message.id desc"
         mycursor.execute(sql_query)
         messages=mycursor.fetchall()
-        meg=[{"name":x,"message":y} for x,y in messages]
-        # print(meg)       
+        meg=[{"name":x,"message":y} for x,y in messages]    
         if request.session.get("user_id")!=None:
                 current_name=request.session.get("user_name")
-                # print("user_id= ",request.session.get("user_id")) #檢查
                 return templates.TemplateResponse("member.html",{"request":request, "current_name":current_name,"messages":meg})
         else:
-                # print("user_id= ",request.session.get("user_id")) #檢查 
                 return RedirectResponse(url="/", status_code=303)        
 
 @app.post("/createMessage", response_class=RedirectResponse)
@@ -94,7 +91,6 @@ async def signout(request: Request):
         request.session["user_id"]=None
         request.session["user_name"]=None
         request.session["user_username"]=None
-        # print("user_id= ",request.session.get("user_id")) #檢查
         return RedirectResponse(url="/member", status_code=303)
 
    
