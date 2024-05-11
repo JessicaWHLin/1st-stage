@@ -30,7 +30,7 @@ CREATE TABLE `member` (
   `follower_count` int unsigned NOT NULL DEFAULT '0',
   `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'test2','test','test',25,'2024-04-30 16:31:14'),(2,'Lily','lily','lily123',20,'2024-04-30 17:00:46'),(3,'Amy','amy','amy123',15,'2024-04-30 17:00:46'),(4,'John','john','john123',10,'2024-04-30 17:00:46'),(5,'Kelly','kelly','kelly123',50,'2024-04-30 17:00:46'),(9,'測試測試','test10','0000',0,'2024-05-08 16:57:25'),(23,'Jessica','jess','0000',0,'2024-05-09 15:46:29'),(24,'test3','test999','0000',0,'2024-05-09 16:14:49');
+INSERT INTO `member` VALUES (1,'test2','test','test',25,'2024-04-30 16:31:14'),(2,'Lily','lily','lily123',20,'2024-04-30 17:00:46'),(3,'Amy','amy','amy123',15,'2024-04-30 17:00:46'),(4,'John','john','john123',10,'2024-04-30 17:00:46'),(5,'Kelly','kelly','kelly123',50,'2024-04-30 17:00:46'),(9,'測試測試','test10','0000',0,'2024-05-08 16:57:25'),(23,'Jessica','jess','0000',0,'2024-05-09 15:46:29'),(24,'test3','test999','0000',0,'2024-05-09 16:14:49'),(25,'123','123','123',0,'2024-05-11 11:11:14');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,7 @@ CREATE TABLE `message` (
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`),
   CONSTRAINT `message_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (6,1,'test',5,'2024-05-01 15:19:38',NULL,NULL),(7,2,'Lily',10,'2024-05-01 15:21:41',NULL,NULL),(8,3,'Amy',15,'2024-05-01 15:21:41',NULL,NULL),(9,4,'John',20,'2024-05-01 15:21:41',1,NULL),(10,5,'Kelly',25,'2024-05-01 15:21:41',NULL,NULL),(11,2,'Hello',5,'2024-05-05 11:23:04',NULL,NULL),(12,1,'test_again',1,'2024-05-05 11:23:04',NULL,6),(13,4,'This is John.',20,'2024-05-05 11:23:04',1,NULL),(14,4,'goodbye.',100,'2024-05-05 11:23:04',NULL,11),(15,3,'good night everyone',5,'2024-05-06 20:33:42',NULL,14),(30,24,'test999',0,'2024-05-09 16:15:17',NULL,NULL),(31,5,'檢查檢查',0,'2024-05-09 16:16:14',NULL,NULL),(32,23,'檢查檢查',0,'2024-05-09 16:17:29',NULL,NULL);
+INSERT INTO `message` VALUES (6,1,'test',5,'2024-05-01 15:19:38',NULL,NULL),(7,2,'Lily',10,'2024-05-01 15:21:41',NULL,NULL),(10,5,'Kelly',25,'2024-05-01 15:21:41',NULL,NULL),(11,2,'Hello',5,'2024-05-05 11:23:04',NULL,NULL),(12,1,'test_again',1,'2024-05-05 11:23:04',NULL,6),(13,4,'This is John.',20,'2024-05-05 11:23:04',1,NULL),(14,4,'goodbye.',100,'2024-05-05 11:23:04',NULL,11),(15,3,'good night everyone',5,'2024-05-06 20:33:42',NULL,14),(37,25,'檢查檢查',0,'2024-05-11 11:11:26',NULL,NULL),(39,3,'檢查檢查',0,'2024-05-11 15:47:21',NULL,NULL),(40,4,'檢查檢查',0,'2024-05-11 15:48:45',NULL,NULL);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,4 +107,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-09 16:26:12
+-- Dump completed on 2024-05-11 15:53:44
