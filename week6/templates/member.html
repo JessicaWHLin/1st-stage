@@ -19,16 +19,26 @@
         <button type="submit" class="submit_meg">送出</button>
       </div>
     </form>
-    <div class="main">
+    <div class="main_3">
       <br/>
       <ul>
         {% for meg in messages %}
-          <li><span class="message">{{meg["name"]}}</span> : {{meg["message"]}}</li>
+          {%if meg["name"]==current_name%}
+          <li class="list">
+            <span class="username">{{meg["name"]}}</span> : {{meg["message"]}}
+            <button type="click" class="deleteBtn">x</button>
+            <span class="meg_id" style="display:none">{{meg["meg_id"]}}</span>
+          </li>
+          {% else %}
+          <li class="list"><span class="username">{{meg["name"]}}</span> : {{meg["message"]}}</li>
+          {% endif%}
         {% else %}
           <li>No data available</li>
         {% endfor %}
       </ul>
+      <br/>
     </div>
     <script src="\static\script.js"></script>
+    
   </body>
 </html>

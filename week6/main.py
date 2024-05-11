@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 import mysql.connector
+from pydantic import BaseModel
 mydb = mysql.connector.connect(
   host="localhost",
   user="test2",
@@ -63,34 +64,58 @@ async def signin(request: Request, username : str=Form(None), password: str= For
 
 @app.get("/error",response_class=HTMLResponse)
 async def error(request: Request,message: str):
-    return templates.TemplateResponse("error.html", {"request":request, "message": message})
+        return templates.TemplateResponse("error.html", {"request":request, "message": message})
 
 @app.get("/member", response_class=HTMLResponse)
 async def member(request: Request):
-        sql_query="select member.name,content from message join member on message.member_id=member.id order by message.id desc"
-        mycursor.execute(sql_query)
-        messages=mycursor.fetchall()
-        meg=[{"name":x,"message":y} for x,y in messages]    
         if request.session.get("user_id")!=None:
                 current_name=request.session.get("user_name")
+                sql_query="select member.name,content,message.id from message join member on message.member_id=member.id order by message.id desc"
+                mycursor.execute(sql_query)
+                messages=mycursor.fetchall()
+                meg=[{"name":x,"message":y,"meg_id":z} for x,y,z in messages]  
                 return templates.TemplateResponse("member.html",{"request":request, "current_name":current_name,"messages":meg})
         else:
                 return RedirectResponse(url="/", status_code=303)        
 
 @app.post("/createMessage", response_class=RedirectResponse)
-async def read_message(request:Request, message :str=Form(None)):
-       user_id=request.session.get("user_id")
-       sql_insert="insert into message(member_id,content)values(%s,%s)"
-       val_insert=(user_id,message)
-       mycursor.execute(sql_insert,val_insert)
-       mydb.commit()
-       return RedirectResponse(url="/member",status_code=303)  
+async def create_message(request:Request, message :str=Form(None)):
+       if request.session.get("user_id")!=None:
+                user_id=request.session.get("user_id")
+                sql_insert="insert into message(member_id,content)values(%s,%s)"
+                val_insert=(user_id,message)
+                mycursor.execute(sql_insert,val_insert)
+                mydb.commit()
+                return RedirectResponse(url="/member",status_code=303)
+       else:
+               return RedirectResponse(url="/", status_code=303)
+               
 
+class Item(BaseModel):
+       meg_id:int
+
+@app.post("/deleteMessage", response_class=RedirectResponse)
+async def delete_message(request:Request, item: Item):
+       if request.session.get("user_id")!=None:
+                meg_id=int(item.meg_id)
+                sql_query="select member_id from message where id=%s"
+                val_query=(meg_id,)
+                mycursor.execute(sql_query,val_query)
+                member_id=mycursor.fetchone()
+                if member_id[0]==request.session.get("user_id"):
+                        sql_delete="delete from message where id=%s"
+                        val_delete=(meg_id,)
+                        mycursor.execute(sql_delete,val_delete)
+                        mydb.commit()
+                        return RedirectResponse(url="/member",status_code=303)
+                else:
+                        return RedirectResponse(url="/", status_code=303)
+       else:
+               return RedirectResponse(url="/", status_code=303)       
+       
 @app.get("/signout",response_class=RedirectResponse)
 async def signout(request: Request):    
         request.session["user_id"]=None
         request.session["user_name"]=None
         request.session["user_username"]=None
         return RedirectResponse(url="/member", status_code=303)
-
-   

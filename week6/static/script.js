@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
   }
 });
+
 // 防呆signin的username/password沒有輸入值
 document.addEventListener("DOMContentLoaded", function(event){
   let submitBtn=document.querySelector("#signin");
@@ -30,3 +31,31 @@ document.addEventListener("DOMContentLoaded", function(event){
     });
   }
 });
+
+//task6
+let clickBtn=document.querySelectorAll(".deleteBtn");
+let meg_id=document.querySelectorAll(".meg_id");
+  for(let i =0;i<clickBtn.length;i++){
+    if(clickBtn[i]){
+      clickBtn[i].addEventListener("click",function(event){
+        deleteMeg(meg_id[i].innerText);
+      });
+    }
+  }
+
+function deleteMeg(megID){
+  var confirmation =confirm("確定要刪除嗎?");
+  if(confirmation){
+    var url="/deleteMessage";
+    fetch(url,{
+      method:'POST',
+      headers:{ 'Content-Type':'application/json'},
+      body: JSON.stringify({meg_id:megID})
+    })
+      .then(response=>response)
+      .then(data=>{
+        location.href="/member";
+      })
+      .catch(error=>console.error("Error:",error));
+  }
+}
