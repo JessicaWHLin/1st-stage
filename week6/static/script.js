@@ -54,7 +54,7 @@ function deleteMeg(megID){
     })
       .then(response=>response)
       .then(data=>{
-        location.href="/member";
+        location.href="/member"; 
       })
       .catch(error=>console.error("Error:",error));
   }

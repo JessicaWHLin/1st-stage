@@ -90,7 +90,6 @@ async def create_message(request:Request, message :str=Form(None)):
        else:
                return RedirectResponse(url="/", status_code=303)
                
-
 class Item(BaseModel):
        meg_id:int
 
