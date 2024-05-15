@@ -1,0 +1,89 @@
+*{
+  /*padding 跟margin設定全域零距離*/
+  padding:0;
+  margin:0;
+  box-sizing:border-box;
+  text-align: center;
+}
+.main{
+  position: relative;/*目的:設定在畫面中置中*/
+  top: 50%;
+  left:50%;
+  transform: translateX(-50%);
+  text-align: center;
+  flex-wrap: wrap;
+  border-color: whitesmoke;
+  border-style:solid;
+  width:100%;
+}
+
+.banner{
+  font-size:30px;
+  background-color:#223344;
+  font-weight: bold;
+  text-align:center;
+  flex-wrap: wrap;
+  color:white;
+  height:100px;
+  padding-top:20px;
+  padding-bottom:20px;
+}
+.loginsystem{
+  padding-top:30px;
+}
+.message{
+  padding-top:30px;
+  font-weight:bold;
+}
+.username{
+  font-weight:bold;
+}
+
+.list{
+  margin:3px 0px 2px 0px;
+}
+.input{
+  height:30px;
+  padding-bottom:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.input_signup{
+  margin:0px 0px 0px 5px;
+}
+.input_signin{
+  margin:0px 0px 0px 5px;
+}
+
+a.logoutsystem{
+  padding-top:10px;
+  size:30px;
+  text-align:center;
+}
+.deleteBtn{
+  padding:0px 4px 0px 4px;
+  margin:0px 0px 0px 5px;
+  text-align:center;
+  cursor:pointer;
+  height:22px;
+}
+.queryBtn{
+  padding:0px 4px 0px 4px;
+  margin:0px 0px 0px 5px;
+  text-align:center;
+  cursor:pointer;
+  height:22px;
+}
+.updateBtn{
+  padding:0px 4px 0px 4px;
+  margin:0px 0px 0px 5px;
+  text-align:center;
+  cursor:pointer;
+  height:22px;
+}
+.inputCell{
+  height:22px;
+  margin:0px 0px 0px 5px;
+ 
+}

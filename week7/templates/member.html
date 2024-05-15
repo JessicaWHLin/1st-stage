@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Success Page</title>
+    <link rel="stylesheet" type="text/css" href="\static\styles.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="banner">歡迎光臨，這是會員頁</div>
+      <h3 class="loginsystem"><span id="current_name">{{current_name}}</span><span>，歡迎登入系統</span></h3>
+      <a href="/signout" id="logoutsystem">登出系統</a>
+      <br><br>
+      <h3>查詢會員姓名</h3><br>
+      <div class="input"><input name="username" type="text" class="inputCell" id="queryUsername"/><button type="click" class="queryBtn">查詢</button></div>
+      <div class="usernameResults"></div>
+      <br><br>
+      <h3>更新我的姓名</h3><br>
+      <div class="input"><input name="username" type="text" class="inputCell" id="updateUsername"/><button type="click" class="updateBtn">更新</button></div>
+      <div class="updateResults"></div>
+      <br><br>
+    </div>
+
+    <form id="meg" action="/createMessage" method="post">
+      <div class="main">
+        <h3 class="message">快來留言吧</h3><br>
+        <div class="input">內容 <input name="message" type="text" class="inputCell"></div>
+        <button type="submit" class="submit_meg">送出</button>
+        <br><br>
+      </div>
+    </form>
+
+    <div class="main">
+      <br>
+      <ul>
+        {% for meg in messages %}
+          {%if meg["id"]==current_id %}
+          <li class="list">
+            <span class="username">{{meg["name"]}}</span> : {{meg["message"]}}
+            <button type="click" class="deleteBtn">x</button>
+            <span class="meg_id" style="display:none">{{meg["meg_id"]}}</span>
+          </li>
+          {% else %}
+          <li class="list"><span class="username">{{meg["name"]}}</span> : {{meg["message"]}}</li>
+          {% endif%}
+        {% else %}
+          <li>No data available</li>
+        {% endfor %}
+      </ul>
+      <br><br>
+    </div>
+    <script src="\static\script.js"></script>
+    
+  </body>
+</html>
