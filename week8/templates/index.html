@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>week8</title>
+	</head>
+	<body>
+
+		<h3>XSS練習</h3>
+			<h4>輸入留言</h4>
+			<input id="input" type="text"><button type="submit" id="btn">留言</button>
+			<div id="newComment"></div>
+		<script>
+			let comment=document.querySelector("#comment");
+			let newComment=document.createElement("p");
+			let container=document.querySelector("#newComment");
+			let newInput=document.querySelector("#input");
+			if(btn){
+				btn.addEventListener('click',(e)=>{
+				container.appendChild(newComment);
+				newComment.textContent=input.value;
+			})
+			}
+		</script>
+	</body>
+</html>

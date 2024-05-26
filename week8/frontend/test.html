@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>CORS test</title>
+	</head>
+	<body>
+		<h3>fetch練習</h3>
+		<button type="click" id="google">fetch google</button><br><br>
+		<button type="click" id="github">fetch Github</button><br><br>
+		<button type="click" id="test">fetch example</button><br><br>
+		<div id="result"></div>
+
+		<script>
+			let googleBtn=document.querySelector("#google");
+			let githubBtn=document.querySelector("#github");
+			let demo=document.querySelector("#result");
+			let testBtn=document.querySelector("#test");
+			// 送需求給google，取得response
+			if(googleBtn){
+				googleBtn.onclick=()=>{
+					fetch("https://www.google.com/")
+						.then(response=>response)
+						.then(data=>{
+							demo.textContent="send request to Google";
+							location.href="https://www.google.com/";
+						})
+						.catch(err=>{
+							console.error(err);
+						});
+				}
+			}
+			//送需求給github，取得response
+			if(githubBtn){
+				githubBtn.onclick=()=>{
+					fetch("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json")
+					.then((response)=>response.json())
+					.then(data=>{
+						console.log(data);
+						for(let i=0;i<data.result.results.length;i++){
+							let newCon=document.createElement("div");
+							demo.appendChild(newCon);
+							newCon.textContent=data.result.results[i].stitle;
+							console.log(data.result.results[i].stitle);
+						}
+						
+				})
+				}	
+			}
+
+			// 測試
+			if(testBtn){
+				testBtn.onclick=()=>{
+					fetch("http://127.0.0.1:8000/example")
+					.then(response=>{
+						return response.json()
+					})
+					.then(data=>{
+						console.log(data);
+					})
+				}
+			}
+		</script>
+	</body>
+</html>

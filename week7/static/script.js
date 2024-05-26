@@ -2,6 +2,9 @@
 document.addEventListener("DOMContentLoaded", function(event) {
   let submitBtn=document.querySelector("#signup");
   let inputInfo = document.querySelectorAll(".input_signup");
+  let password_limit=document.querySelector("#inipassword");
+  let result= document.querySelector("#signupResult");
+  let re=/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%])[a-zA-Z\d@#$%]{4,8}$/;
   if(submitBtn){
     submitBtn.addEventListener('submit',function(event){
       for(let i=0;i<inputInfo.length;i++){
@@ -11,6 +14,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
           break;
         }
       }
+    });
+    // 註冊帳號輸入限制:英文數字跟@#$%,4-8字內
+    //取出註冊password的node→建立正規表達式建立判斷function→按鈕submit→正規表達式不符合(value=null)就跳出預警視窗
+    submitBtn.addEventListener('submit',function(e){
+      if(password_limit.value.match(re)==null){
+        // console.log("username_limit.value.match(re)= "+username_limit.value.match(re));
+        e.preventDefault();
+        alert("請設定4~8碼含英文及數字及@#$%的密碼");
+      }
+      else{result.textContent="註冊成功";}
     });
   }
 });
