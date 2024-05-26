@@ -5,6 +5,9 @@ from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
 import mysql.connector
 from pydantic import BaseModel
+import re
+from urllib.parse import quote
+
 mydb = mysql.connector.connect(
   host="localhost",
   user="test2",
@@ -12,6 +15,7 @@ mydb = mysql.connector.connect(
   database="website"
   )
 mycursor = mydb.cursor()
+
 
 app = FastAPI()
 
@@ -45,15 +49,23 @@ async def signup(request:Request, iniName : str=Form(...), iniUsername: str=Form
         val_check=(iniUsername,) 
         mycursor.execute(sql_check,val_check)
         check_result=mycursor.fetchone()
-        if check_result == None:
-                sql_add="insert into member(name,username,password)values( %s,%s,%s )"
-                val_add=(iniName,iniUsername,iniPassword)
-                mycursor.execute(sql_add,val_add)
-                mydb.commit()
-                return RedirectResponse(url="/",status_code=303)
+        #後端檢查密碼限制
+        #拿到輸入的密碼→檢查規則→若符合規則:進行註冊；若不符合規則:redriect或傳回error給前端
+        rules= r'^[a-zA-Z0-9@#$%]{4,8}$'
+        if(re.match(rules,iniPassword)!=None):
+                if check_result == None:
+                        sql_add="insert into member(name,username,password)values( %s,%s,%s )"
+                        val_add=(iniName,iniUsername,iniPassword)
+                        mycursor.execute(sql_add,val_add)
+                        mydb.commit()
+                        mycursor.close()
+                        return RedirectResponse(url="/",status_code=303)
+                else:
+                        return RedirectResponse(url="/error?message=重複帳號", status_code=303)
         else:
-                return RedirectResponse(url="/error?message=重複帳號", status_code=303)
-        
+                encoded_message=quote("密碼需4~8碼含英文及數字及@#$%")
+                return RedirectResponse(url=f"/error?message={encoded_message}",status_code=303)
+                
 @app.post("/signin" , response_class=RedirectResponse)
 async def signin(request: Request, username : str=Form(None), password: str= Form(None)):
         veri=verify(request,username,password)
@@ -87,6 +99,7 @@ async def create_message(request:Request, message :str=Form(None)):
                 val_insert=(user_id,message)
                 mycursor.execute(sql_insert,val_insert)
                 mydb.commit()
+                # mycursor.close()
                 return RedirectResponse(url="/member",status_code=303)
        else:
                return RedirectResponse(url="/", status_code=303)
@@ -107,6 +120,7 @@ async def delete_message(request:Request, item: Item):
                         val_delete=(meg_id,)
                         mycursor.execute(sql_delete,val_delete)
                         mydb.commit()
+                        # mycursor.close()
                         return RedirectResponse(url="/member",status_code=303)
                 else:
                         return RedirectResponse(url="/", status_code=303)
@@ -145,11 +159,11 @@ async def update_name(request:Request, item:item2):
                 mycursor.execute(sql_update,val_update)
                 mycursor.fetchone()
                 mydb.commit()
+                # mycursor.close()
                 request.session["user_name"]=item.name
                 result={"ok":True}
                 return {"data":result}
         else:
                 result={"error":True}
                 return {"data":result}
-               
-
+          

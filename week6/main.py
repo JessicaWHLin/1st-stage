@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
@@ -118,3 +118,4 @@ async def signout(request: Request):
         request.session["user_name"]=None
         request.session["user_username"]=None
         return RedirectResponse(url="/member", status_code=303)
+
